@@ -3,21 +3,14 @@ main_app.controller('main_controller', ['$scope', function($scope) {
     $scope.greeting = "Index page working with Express!";
 }]);
 
-main_app.controller('nav_bar_controller', ['$scope', '$location', 'AuthService', '$cookies', function($scope, $location, AuthService, $cookies) {
+main_app.controller('nav_bar_controller', ['$scope', '$location', 'AuthService', function($scope, $location, AuthService) {
+    $scope.login_str = "Login";
+    $scope.register_str = "Register";
+    $scope.logout_str = "Logout";
+
     $scope.nav_sections = [
         {name: "Home", url: "home"},
         {name: "Create new post", url: "create_post"}];
-    
-    AuthService.getUserStatus().then(function() {
-        if(!AuthService.isLoggedIn()) {
-            $scope.nav_sections.push(
-            {name: "Login", url: "login"},
-            {name: "Register", url: "register"});
-        } else {
-            $scope.nav_sections.push({name: "user.username", url: "user_dashboard"},
-            {name: "Logout", url: 'logout'});
-        }
-    });
 
     $scope.news_public_controller = function (page) {
       var currentRoute = $location.path().substring(1) || 'index';
@@ -33,7 +26,9 @@ main_app.controller('home_controller', ['$scope', 'BlogService', function($scope
     });
 }]);
 
-main_app.controller('login_controller', ['$scope', '$location', 'AuthService', function($scope, $location, AuthService) {
+main_app.controller('login_controller', ['$scope', '$location', 'AuthService', '$window',
+    function($scope, $location, AuthService, $window) {
+
     $scope.username = "Username";
     $scope.password = "Password";
 
@@ -49,6 +44,8 @@ main_app.controller('login_controller', ['$scope', '$location', 'AuthService', f
           $location.path('/');
           $scope.disabled = false;
           $scope.loginForm = {};
+          $window.location.assign('#/home');
+          $window.location.reload();
         })
         // handle error
         .catch(function () {
@@ -61,7 +58,9 @@ main_app.controller('login_controller', ['$scope', '$location', 'AuthService', f
     };
 }]);
 
-main_app.controller('register_controller', ['$scope', '$location', 'AuthService', function ($scope, $location, AuthService) {
+main_app.controller('register_controller', ['$scope', '$location', 'AuthService', '$route',
+    function ($scope, $location, AuthService, $route) {
+    
     $scope.register = function () {
 
       // initial values
@@ -88,21 +87,20 @@ main_app.controller('register_controller', ['$scope', '$location', 'AuthService'
 
 }]);
 
-main_app.controller('logout_controller', ['$scope', '$location', 'AuthService', function ($scope, $location, AuthService) {
+main_app.controller('logout_controller', ['$scope', '$location', 'AuthService', '$window',
+    function ($scope, $location, AuthService, $window) {
 
     $scope.logout = function () {
 
       // call logout from service
-      AuthService.logout()
-        .then(function () {
-          $location.path('/login');
-        });
-
+      AuthService.logout();
+      $window.location.assign('#/login');
+      $window.location.reload();
     };
 }]);
 
-main_app.controller('blog_create_controller', ['$scope', '$location', 'BlogService', 'AuthService', function ($scope, $location, BlogService, AuthService) {
-    $scope.username = AuthService.getUsername();
+main_app.controller('blog_create_controller', ['$scope', '$location', 'BlogService', function ($scope, $location, BlogService) {
+    $scope.username = user.username;
     $scope.createPost = function (title, body, author) {
         $scope.error= false;
         $scope.disabled = true;

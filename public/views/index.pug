@@ -1,0 +1,53 @@
+doctype html
+html(lang="en", ng-app="main_app")
+    head
+        meta(charset="utf-8")
+        meta(http-equiv="X-UA-Compatible", content="IE=edge")  
+        meta(name="viewport", content="width=device-width, initial-scale=1")
+
+        title MEAN Template
+
+        link(href="./css/bootstrap.min.css", rel="stylesheet")
+        link(href="./css/bootstrap-theme.min.css", rel="stylesheet")
+        link(href="./css/main_layout.css", rel="stylesheet")
+
+    body(ng-controller="main_controller")
+        nav(class="navbar navbar-inverse navbar-fixed-top", ng-controller="nav_bar_controller")
+            div(class="container-fluid")
+                div(class="navbar-header")
+                    button(type="button", class="navbar-toggle collapsed", data-toggle="collapse",
+                        data-target="#navbar", aria-expanded="false", aria-controls="navbar")
+                        span(class="sr-only") Toggle navigation
+                        span(class="icon-bar")
+                        span(class="icon-bar")
+                        span(class="icon-bar")
+
+                    a(class="navbar-brand", href="#") Node Template
+
+                div(id="navbar", class="navbar-collapse collapse")
+                    ul(class="nav navbar-nav navbar-right")
+                        li(ng-repeat="nav_section in nav_sections")
+                            a(href="#/{{nav_section.url}}") {{nav_section.name}}
+                        if(user)
+                            li
+                                a(href="#/dashboard") #{user.username}
+                            li
+                                a(href="#/logout") {{logout_str}}
+                        else
+                            li
+                                a(href="#/login") {{login_str}}
+                            li
+                                a(href="#/login") {{register_str}}
+
+        div(id="page_wrapper", class="container", ng-view)
+
+
+        <!-- Load Javascript documents -->
+        script(src="./js/jquery.min.js")
+        script(src="./js/angular.min.js")
+        script(src="./js/angular-route.min.js")
+        script(src="./js/angular-cookies.min.js")
+        script(src="./js/bootstrap.min.js")
+        script(src="./js/app.js")
+        script(src="./services.js")
+        script(src="./js/controllers.js")

@@ -28,9 +28,9 @@ passport.deserializeUser(User.deserializeUser());
 app.use(express.static(path.join(__dirname, '/public/client')));
 app.set('views', path.join(__dirname, '/public/views'));  
 app.engine('html', require('ejs').renderFile);
-app.set('view engine', 'html');
+app.set('view engine', 'pug');
 app.use(router);
-app.use(express.static(path.join(__dirname, '/public')));                 // set the static files location /public/img will be /img for users
+app.use(express.static(path.join(__dirname, '/public/res')));   // set the static files location /public/img will be /img for users
 app.use(bodyParser.urlencoded({'extended':'true'}));            // parse application/x-www-form-urlencoded
 app.use(bodyParser.json());                                     // parse application/json
 app.use(bodyParser.json({ type: 'application/vnd.api+json' })); // parse application/vnd.api+json as json

@@ -101,9 +101,13 @@ router.post('/blog/create', function(req, res) {
     });
 });
 
+router.get('/views/:view_name', function(req, res) {
+  var vName = req.params.view_name;
+  res.render(vName, {user: req.user})
+});
+
 router.get('/', function(req, res) {
-  console.log(req.user);
-    res.render('index', {user: req.user})
+	res.render('index', {user: req.user})
 });
 
 module.exports = router;

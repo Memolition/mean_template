@@ -1,27 +1,26 @@
 var main_app = angular.module('main_app', ['ngRoute', 'ngCookies'])
     .config(function ($routeProvider, $locationProvider, $httpProvider) {
         $routeProvider.when('/home', {
-            templateUrl: "views/home.html",
+            templateUrl: "views/home.pug",
             controller: 'home_controller',
             access: {restricted: true}
         });
         $routeProvider.when('/login', {
-            templateUrl: 'views/login.html',
+            templateUrl: 'views/login.pug',
             controller: 'login_controller',
             access: {restricted: false}
         });
         $routeProvider.when('/register', {
-            templateUrl: 'views/register.html',
+            templateUrl: 'views/register.pug',
             controller: 'register_controller',
             access: {restricted: false}
         });
         $routeProvider.when('/create_post', {
-            templateUrl: 'views/create_post.html',
+            templateUrl: 'views/create_post.pug',
             controller: 'blog_create_controller',
             access: {restricted: true}
         });
         $routeProvider.when('/logout', {
-            templateUrl: 'user/logout',
             controller: 'logout_controller',
             access: {restricted: false}
         });
