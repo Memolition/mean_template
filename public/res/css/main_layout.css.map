@@ -1,0 +1,7 @@
+{
+"version": 3,
+"mappings": "AAAA,IAAK;EACD,WAAW,EAAE,UAAU;EACvB,WAAW,EAAE,IAAI",
+"sources": ["../../../private/scss/main_layout.scss"],
+"names": [],
+"file": "main_layout.css"
+}
