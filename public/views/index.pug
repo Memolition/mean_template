@@ -32,7 +32,7 @@ html(lang="en", ng-app="main_app")
                             li
                                 a(href="#/dashboard") #{user.username}
                             li
-                                a(href="#/logout") {{logout_str}}
+                                a(ng-click='logout()') {{logout_str}}
                         else
                             li
                                 a(href="#/login") {{login_str}}

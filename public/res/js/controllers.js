@@ -3,7 +3,9 @@ main_app.controller('main_controller', ['$scope', function($scope) {
     $scope.greeting = "Index page working with Express!";
 }]);
 
-main_app.controller('nav_bar_controller', ['$scope', '$location', 'AuthService', function($scope, $location, AuthService) {
+main_app.controller('nav_bar_controller', ['$scope', '$location', 'AuthService', '$window',
+    function($scope, $location, AuthService, $window) {
+
     $scope.login_str = "Login";
     $scope.register_str = "Register";
     $scope.logout_str = "Logout";
@@ -15,6 +17,14 @@ main_app.controller('nav_bar_controller', ['$scope', '$location', 'AuthService',
     $scope.news_public_controller = function (page) {
       var currentRoute = $location.path().substring(1) || 'index';
         return page === currentRoute ? 'active' : '';
+    };
+
+    $scope.logout = function () {
+
+      // call logout from service
+      AuthService.logout().then(function() {
+        $window.location.reload();
+      });
     };
 
 }]);
@@ -41,10 +51,10 @@ main_app.controller('login_controller', ['$scope', '$location', 'AuthService', '
       AuthService.login($scope.loginForm.username, $scope.loginForm.password)
         // handle success
         .then(function () {
-          $location.path('/');
+//          $location.path('/');
           $scope.disabled = false;
           $scope.loginForm = {};
-          $window.location.assign('#/home');
+//          $window.location.assign('#/home');
           $window.location.reload();
         })
         // handle error
@@ -85,18 +95,6 @@ main_app.controller('register_controller', ['$scope', '$location', 'AuthService'
 
     };
 
-}]);
-
-main_app.controller('logout_controller', ['$scope', '$location', 'AuthService', '$window',
-    function ($scope, $location, AuthService, $window) {
-
-    $scope.logout = function () {
-
-      // call logout from service
-      AuthService.logout();
-      $window.location.assign('#/login');
-      $window.location.reload();
-    };
 }]);
 
 main_app.controller('blog_create_controller', ['$scope', '$location', 'BlogService', function ($scope, $location, BlogService) {
